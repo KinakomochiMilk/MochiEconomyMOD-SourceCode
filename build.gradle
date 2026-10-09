@@ -1,0 +1,113 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net/' }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+version = '0.1.0-alpha'
+group = 'jp.kinakomochi.mochieconomy'
+archivesBaseName = 'mochieconomy'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: 'snapshot', version: '20171003-1.12'
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
+}
+
+repositories {
+    maven { url = 'https://maven.minecraftforge.net/' }
+    mavenCentral()
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'
+
+    compile 'com.moandjiezana.toml:toml4j:0.7.2'
+}
+
+/*
+ * Forge 1.12.2 開発環境で
+ * src/main/resources をクラスパスへ確実に含める。
+ */
+sourceSets {
+    main {
+        output.resourcesDir = output.classesDir
+    }
+}
+
+/*
+ * toml4jをMOD本体へ同梱する。
+ *
+ * Forge本体(minecraft依存)は含めず、
+ * toml4jだけを完成したJARへ追加する。
+ */
+jar {
+    from {
+        configurations.compile
+                .filter {
+                    it.name.startsWith('toml4j-')
+                }
+                .collect {
+                    it.isDirectory()
+                            ? it
+                            : zipTree(it)
+                }
+    }
+
+    manifest {
+        attributes([
+                "Specification-Title": "mochieconomy",
+                "Specification-Vendor": "KinakomochiMilk",
+                "Specification-Version": "1",
+
+                "Implementation-Title": project.name,
+                "Implementation-Version": "${version}",
+                "Implementation-Vendor": "KinakomochiMilk",
+                "Implementation-Timestamp":
+                        new Date().format(
+                                "yyyy-MM-dd'T'HH:mm:ssZ"
+                        )
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "mochi_coin": "Mochi Coin",
+  "compressed_mochi_coin": "Compressed Mochi Coin",
+  "super_compressed_mochi_coin": "Super Compressed Mochi Coin",
+
+  "trader": "Trader",
+  "purchase": "Purchase",
+  "exchange": "Exchange",
+  "player_trade": "Player Trading",
+
+  "purchase_button": "Purchase",
+  "exchange_button": "Exchange",
+
+  "price": "Price",
+  "amount": "Amount",
+  "total": "Total",
+
+  "insufficient_funds": "You don't have enough Mochi Coins.",
+  "purchase_success": "Purchase successful.",
+  "exchange_success": "Exchange successful.",
+  "invalid_amount": "The amount is invalid."
+}

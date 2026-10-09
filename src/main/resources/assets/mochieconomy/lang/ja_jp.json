@@ -1,0 +1,22 @@
+{
+  "mochi_coin": "もちコイン",
+  "compressed_mochi_coin": "圧縮もちコイン",
+  "super_compressed_mochi_coin": "超圧縮もちコイン",
+
+  "trader": "交換機",
+  "purchase": "購入",
+  "exchange": "両替",
+  "player_trade": "プレイヤー売買",
+
+  "purchase_button": "購入",
+  "exchange_button": "交換",
+
+  "price": "価格",
+  "amount": "数量",
+  "total": "合計",
+
+  "insufficient_funds": "もちコインが足りません。",
+  "purchase_success": "購入しました。",
+  "exchange_success": "両替しました。",
+  "invalid_amount": "数量が正しくありません。"
+}
